@@ -18,9 +18,4 @@ $required_deps | ? { $installed_deps -notcontains $_ } | % { Instal-Dependancy $
 
 $env:Path = [System.Environment]::GetEnvironmentVariable("PATH", "Machine")
 
-gem install -Y bundle rake
-
-if(-not (test-path ~\.ssh\id_rsa))
-{
-	    if($cert = Read-Host 'Paste your id_rsa key' -AsSecureString) { echo $cert >> ~/.ssh/id_rsa }
-}
+gem install bundle
