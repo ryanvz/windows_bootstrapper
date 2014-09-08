@@ -1,9 +1,3 @@
-Function Instal-Dependancy($name)
-{
-    Write-Output ("Installing " + $name)
-    choco install $name
-}
-
 # Get Chocolatey
 if(-Not (Test-Path env:ChocolateyInstall))
 {
@@ -11,11 +5,12 @@ if(-Not (Test-Path env:ChocolateyInstall))
     iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))
 }
 
-$installed_deps = choco list -localonly | % { $_.split()[0] }
-$required_deps = @("git", "DotNet4.5", "microsoft-build-tools", "msdeploy", "NuGet.CommandLine", "ruby", "notepadplusplus")
+choco install git DotNet4.5 microsoft-build-tools webdeploy NuGet.CommandLine ruby1.9 ruby.devkit notepadplusplus ConEmu GoogleChrome
 
-$required_deps | ? { $installed_deps -notcontains $_ } | % { Instal-Dependancy $_ }
+mkdir ~/.ssh
+echo $null >> ~/.ssh/id_rsa
+echo $null >> ~/.ssh/id_rsa.pub
 
+#refresh path to pick up ruby binaries
 $env:Path = [System.Environment]::GetEnvironmentVariable("PATH", "Machine")
-
 gem install bundle
